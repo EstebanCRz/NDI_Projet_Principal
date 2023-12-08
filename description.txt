@@ -1,0 +1,2 @@
+L'application est le site réalisé pour le projet principal de la Nuit de l'info. Il consiste en un une série de questions portant sur l'écologie.
+En haut à droite de la page se situe un menu où l'utilisateur peut choisir différent thème pour la page.
