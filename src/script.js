@@ -110,7 +110,7 @@ nextButton.addEventListener('click', () => {
     });
 
     if (currentQuestionIndex < questions.length) {
-        explanationElement.innerHTML = ""; // Efface l'explication pour la nouvelle question
+        explanationElement.innerHTML = "";
         updateScore();
         loadQuestion(currentQuestionIndex);
     } else {
