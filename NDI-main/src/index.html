@@ -1,0 +1,77 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quiz sur le Climat</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link id="css" rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="quiz-container">
+            <div class="question-container" id="question-container">
+                <div id="score">Score: 0</div>
+                <h2 id="question"></h2>
+                <div id="options-container" class="options-container"></div>
+                <div id="explanation"></div>
+                <button id="next-btn">Suivant</button>
+            </div>
+            
+            <div class="result-container" id="result-container">
+                <h2 id="result"></h2>
+                <button id="restart-btn">Recommencer</button>
+            </div>
+        </div>
+        <div id="theme">
+            <div class="choice">
+                <input type="radio" name="group" id="darkStyle.css">
+                <label for="Dark">Dark Mode</label>
+            </div>
+            
+            <div class="choice">
+                <input type="radio" name="group" id="style.css">
+                <label for="White">Green Mode</label>
+            </div>
+            
+            <div class="choice">
+                <input type="radio" name="group" id="greenStyle.css">
+                <label for="green">White Mode</label>
+            </div>
+            
+            <div class="choice">
+                <input type="radio" name="group" id="Christmas">
+                <label for="Christmas">Pluie d'arbre</label>
+            </div>
+        
+        </div>
+        <script src="script.js"></script>
+        <script>
+           // Initialiser le Konami Code
+           const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+            // Stocker les touches entrées par l'utilisateur
+            let userInput = [];
+
+            // Fonction de gestion de l'événement de touche pressée
+            function konamiCodeHandler(event) {
+            // Ajouter la touche à la liste des touches entrées
+            userInput.push(event.key);
+
+            // Tronquer la liste pour qu'elle ait la même longueur que le code Konami
+            userInput = userInput.slice(-konamiCode.length);
+
+            // Vérifier si la séquence correspond au code Konami
+            if (JSON.stringify(userInput) === JSON.stringify(konamiCode)) {
+                // Code Konami détecté, exécutez votre action ici
+                window.location.href = '../nuit/index.html';
+            }
+            }
+
+            // Ajouter un écouteur d'événements pour chaque touche pressée
+            document.addEventListener('keydown', konamiCodeHandler);
+
+        </script>
+    </body>
+</html>
