@@ -1,5 +1,19 @@
 // script.js
 
+
+const choices = document.querySelectorAll('.choice input');
+
+choices.forEach(choice => {
+    choice.addEventListener('change', () => {
+        //change the css file in the html
+        if (choice.checked) {
+            console.log(choice.id);
+            document.getElementById('css').href = choice.id;
+        }
+    });
+});
+
+
 const questions = [
     {
         question: "Quelle est la principale cause du réchauffement climatique?",
