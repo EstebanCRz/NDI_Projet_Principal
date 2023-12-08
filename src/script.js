@@ -1,70 +1,24 @@
-// script.js
-
-
 const choices = document.querySelectorAll('.choice input');
 
 choices.forEach(choice => {
     choice.addEventListener('change', () => {
-        //change the css file in the html
         if (choice.checked) {
-            console.log(choice.id);
             document.getElementById('css').href = choice.id;
         }
     });
 });
 
-
 const questions = [
-    {
-        question: "Quelle est la principale cause du réchauffement climatique?",
-        options: ["Les éruptions volcaniques", "L'activité humaine", "Les variations naturelles"],
-        correctAnswer: 1
-    },
-    {
-        question: "Quelle est la principale source d'émissions de gaz à effet de serre?",
-        options: ["Industrie", "Transport", "Agriculture", "Toutes les réponses ci-dessus"],
-        correctAnswer: 3
-    },
-    {
-        question: "Quelle action contribue le plus à la réduction de l'empreinte carbone?",
-        options: ["Réduire la consommation d'énergie", "Utiliser des énergies renouvelables", "Recycler", "Manger moins de viande"],
-        correctAnswer: 3
-    },
-    {
-        question: "Quel est l'effet du déboisement sur le climat?",
-        options: ["Refroidissement de la planète", "Augmentation des émissions de CO2", "Aucun effet"],
-        correctAnswer: 1
-    },
-    {
-        question: "Qu'est-ce que l'effet de serre?",
-        options: ["Un phénomène météorologique", "Une augmentation de la chaleur due à des gaz dans l'atmosphère", "Un refroidissement de la planète"],
-        correctAnswer: 1
-    },
-    {
-        question: "Quelle est la principale menace pour les récifs coralliens liée au changement climatique?",
-        options: ["La pollution plastique", "L'acidification des océans", "La surpêche"],
-        correctAnswer: 2
-    },
-    {
-        question: "Quelle est la principale source d'énergie renouvelable utilisée pour produire de l'électricité?",
-        options: ["Énergie solaire", "Énergie éolienne", "Énergie hydraulique", "Toutes les réponses ci-dessus"],
-        correctAnswer: 3
-    },
-    {
-        question: "Qu'est-ce que la neutralité carbone?",
-        options: ["Absence totale d'émissions de carbone", "Équilibre entre les émissions et les absorptions de carbone", "Réduction de la consommation de carburant"],
-        correctAnswer: 2
-    },
-    {
-        question: "Quel est l'impact du changement climatique sur la biodiversité?",
-        options: ["Aucun impact", "Diminution de la biodiversité", "Augmentation de la biodiversité"],
-        correctAnswer: 1
-    },
-    {
-        question: "Quel gaz à effet de serre est principalement émis par l'agriculture?",
-        options: ["Dioxyde de carbone (CO2)", "Méthane (CH4)", "Protoxyde d'azote (N2O)"],
-        correctAnswer: 1
-    }
+    { question: "Quelle est la principale cause du réchauffement climatique?", options: ["Les éruptions volcaniques", "L'activité humaine", "Les variations naturelles"], correctAnswer: 1 },
+    { question: "Quelle est la principale source d'émissions de gaz à effet de serre?", options: ["Industrie", "Transport", "Agriculture", "Toutes les réponses ci-dessus"], correctAnswer: 3 },
+    { question: "Quelle action contribue le plus à la réduction de l'empreinte carbone?", options: ["Réduire la consommation d'énergie", "Utiliser des énergies renouvelables", "Recycler", "Manger moins de viande"], correctAnswer: 3 },
+    { question: "Quel est l'effet du déboisement sur le climat?", options: ["Refroidissement de la planète", "Augmentation des émissions de CO2", "Aucun effet"], correctAnswer: 1 },
+    { question: "Qu'est-ce que l'effet de serre?", options: ["Un phénomène météorologique", "Une augmentation de la chaleur due à des gaz dans l'atmosphère", "Un refroidissement de la planète"], correctAnswer: 1 },
+    { question: "Quelle est la principale menace pour les récifs coralliens liée au changement climatique?", options: ["La pollution plastique", "L'acidification des océans", "La surpêche"], correctAnswer: 2 },
+    { question: "Quelle est la principale source d'énergie renouvelable utilisée pour produire de l'électricité?", options: ["Énergie solaire", "Énergie éolienne", "Énergie hydraulique", "Toutes les réponses ci-dessus"], correctAnswer: 3 },
+    { question: "Qu'est-ce que la neutralité carbone?", options: ["Absence totale d'émissions de carbone", "Équilibre entre les émissions et les absorptions de carbone", "Réduction de la consommation de carburant"], correctAnswer: 2 },
+    { question: "Quel est l'impact du changement climatique sur la biodiversité?", options: ["Aucun impact", "Diminution de la biodiversité", "Augmentation de la biodiversité"], correctAnswer: 1 },
+    { question: "Quel gaz à effet de serre est principalement émis par l'agriculture?", options: ["Dioxyde de carbone (CO2)", "Méthane (CH4)", "Protoxyde d'azote (N2O)"], correctAnswer: 1 }
 ];
 
 const explanations = [
@@ -101,13 +55,7 @@ function startQuiz() {
 }
 
 function loadQuestion(index) {
-    if (index > 0) {
-        // Afficher l'explication de la question précédente
-        explanationElement.innerHTML = `<p>${explanations[index - 1]}</p>`;
-    } else {
-        explanationElement.innerHTML = ""; // Pas d'explication pour la première question
-    }
-
+    explanationElement.innerHTML = ""; // Efface l'explication
     const currentQuestion = questions[index];
     questionElement.textContent = currentQuestion.question;
     optionsContainer.innerHTML = "";
@@ -123,21 +71,16 @@ function loadQuestion(index) {
 
 function selectOption(selectedIndex) {
     const currentQuestion = questions[currentQuestionIndex];
+    const selectedButton = optionsContainer.children[selectedIndex];
+
     if (selectedIndex === currentQuestion.correctAnswer) {
+        selectedButton.classList.add('correct');
         score++;
-    }
-
-    // Display explanation
-    explanationElement.innerHTML = `<p>${explanations[currentQuestionIndex]}</p>`;
-
-    currentQuestionIndex++;
-
-    if (currentQuestionIndex < questions.length) {
-        updateScore();
-        loadQuestion(currentQuestionIndex);
     } else {
-        showResult();
+        selectedButton.classList.add('incorrect');
     }
+
+    explanationElement.innerHTML = `<p>${explanations[currentQuestionIndex]}</p>`;
 }
 
 function updateScore() {
@@ -161,11 +104,18 @@ startQuiz();
 
 nextButton.addEventListener('click', () => {
     currentQuestionIndex++;
+
+    optionsContainer.childNodes.forEach(button => {
+        button.classList.remove('correct', 'incorrect');
+    });
+
     if (currentQuestionIndex < questions.length) {
+        explanationElement.innerHTML = ""; // Efface l'explication pour la nouvelle question
         updateScore();
         loadQuestion(currentQuestionIndex);
     } else {
         showResult();
     }
 });
+
 restartButton.addEventListener('click', restartQuiz);
