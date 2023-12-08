@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Defender</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Initial position of the player
+    let playerX = 50;
+    let playerY = canvas.height - 30;
+
+    // Variables for obstacles
+    let obstacleWidth = 30;
+    let obstacleHeight = 30;
+    let obstacleX = canvas.width;
+    let obstacleY = canvas.height - obstacleHeight;
+
+    // Variables for score
+    let score = 0;
+
+    function drawPlayer() {
+        ctx.fillStyle = "#00F";
+        ctx.fillRect(playerX, playerY, 20, 20);
+    }
+
+    function drawObstacle() {
+        ctx.fillStyle = "#F00";
+        ctx.fillRect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+    }
+
+    function drawScore() {
+        ctx.fillStyle = "#000";
+        ctx.font = "20px Arial";
+        ctx.fillText("Score: " + score, 10, 20);
+    }
+
+    function movePlayer(event) {
+        if (event.code === "ArrowUp" && playerY > 0) {
+            playerY -= 10;
+        } else if (event.code === "ArrowDown" && playerY < canvas.height - 20) {
+            playerY += 10;
+        }
+    }
+
+    function updateGame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawPlayer();
+        drawObstacle();
+        drawScore();
+
+        obstacleX -= 5; // Adjust the speed of the obstacle
+
+        // Check for collision
+        if (
+            playerX < obstacleX + obstacleWidth &&
+            playerX + 20 > obstacleX &&
+            playerY < obstacleY + obstacleHeight &&
+            playerY + 20 > obstacleY
+        ) {
+            // Collision detected
+            alert("Game Over! Your score: " + score);
+            resetGame();
+        }
+
+        // Check if obstacle has passed the player
+        if (obstacleX < 0) {
+            obstacleX = canvas.width;
+            obstacleY = canvas.height - obstacleHeight;
+            score++;
+        }
+
+        requestAnimationFrame(updateGame);
+    }
+
+    function resetGame() {
+        obstacleX = canvas.width;
+        obstacleY = canvas.height - obstacleHeight;
+        playerX = 50;
+        playerY = canvas.height - 30;
+        score = 0;
+    }
+
+    document.addEventListener("keydown", movePlayer);
+
+    // Start the game loop
+    updateGame();
+</script>
+
+</body>
+</html>
