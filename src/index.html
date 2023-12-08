@@ -197,6 +197,13 @@
     }
 
     function loadQuestion(index) {
+        if (index > 0) {
+            // Afficher l'explication de la question précédente
+            explanationElement.innerHTML = `<p>${explanations[index - 1]}</p>`;
+        } else {
+            explanationElement.innerHTML = ""; // Pas d'explication pour la première question
+        }
+
         const currentQuestion = questions[index];
         questionElement.textContent = currentQuestion.question;
         optionsContainer.innerHTML = "";
@@ -208,9 +215,8 @@
             button.addEventListener('click', () => selectOption(i));
             optionsContainer.appendChild(button);
         });
-
-        explanationElement.innerHTML = ""; // Clear previous explanation
     }
+
 
     function selectOption(selectedIndex) {
         const currentQuestion = questions[currentQuestionIndex];
@@ -250,7 +256,15 @@
 
     startQuiz();
 
-    nextButton.addEventListener('click', () => loadQuestion(currentQuestionIndex));
+    nextButton.addEventListener('click', () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            updateScore();
+            loadQuestion(currentQuestionIndex);
+        } else {
+            showResult();
+        }
+    });
     restartButton.addEventListener('click', restartQuiz);
 </script>
 
